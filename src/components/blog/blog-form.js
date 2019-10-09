@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from "react";
+import axios from "axios";
 
 import RichTextEditor from "../forms/rich-text-editor";
 
@@ -8,14 +8,16 @@ export default class BlogForm extends Component {
     super(props);
 
     this.state = {
-        title: "",
-        blog_status: "",
-        content: ""
-    }
+      title: "",
+      blog_status: "",
+      content: ""
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleRichTextEditorChange = this.handleRichTextEditorChange.bind(this);
+    this.handleRichTextEditorChange = this.handleRichTextEditorChange.bind(
+      this
+    );
   }
 
   handleRichTextEditorChange(content) {
@@ -23,35 +25,44 @@ export default class BlogForm extends Component {
   }
 
   bulidForm() {
-      let formData = new FormData();
+    let formData = new FormData();
 
-      formData.append("portfolio_blog[title]", this.state.title);
-      formData.append("portfolio_blog[blog_status]", this.state.blog_status);
-      formData.append("portfolio_blog[content]", this.state.content);
+    formData.append("portfolio_blog[title]", this.state.title);
+    formData.append("portfolio_blog[blog_status]", this.state.blog_status);
+    formData.append("portfolio_blog[content]", this.state.content);
 
-      return formData;
+    return formData;
   }
 
   handleSubmit(event) {
-      axios.post("https://jordanayoso.devcamp.space/portfolio/portfolio_blogs", this.bulidForm(), { withCredentials: true }
-      ).then(response => {
-      this.props.handleSuccessfullFormSubmission(response.data.portfolio_blog);
-
-      this.setState({
+    axios
+      .post(
+        "https://jordanayoso.devcamp.space/portfolio/portfolio_blogs",
+        this.bulidForm(),
+        { withCredentials: true }
+      )
+      .then(response => {
+        this.setState({
           title: "",
-          blog_status: ""
+          blog_status: "",
+          content: ""
         });
-      }).catch(error => {
+
+        this.props.handleSuccessfullFormSubmission(
+          response.data.portfolio_blog
+        );
+      })
+      .catch(error => {
         console.log("handleSubmit for blog error", error);
       });
-      
-      event.preventDefault();
+
+    event.preventDefault();
   }
 
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value
-    })
+    });
   }
 
   render() {
@@ -64,7 +75,7 @@ export default class BlogForm extends Component {
             name="title"
             placeholder="Blog Title"
             value={this.state.title}
-          /> 
+          />
 
           <input
             type="text"
@@ -76,11 +87,13 @@ export default class BlogForm extends Component {
         </div>
 
         <div className="one-column">
-          <RichTextEditor handleRichTextEditorChange={this.handleRichTextEditorChange} />  
+          <RichTextEditor
+            handleRichTextEditorChange={this.handleRichTextEditorChange}
+          />
         </div>
 
-      <button className="btn">Save</button> 
+        <button className="btn">Save</button>
       </form>
     );
   }
-}    
+}

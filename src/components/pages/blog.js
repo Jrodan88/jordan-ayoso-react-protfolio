@@ -22,7 +22,9 @@ class Blog extends Component {
     window.addEventListener("scroll", this.onScroll, false);
     this.handleNewBlogClick = this.handleNewBlogClick.bind(this);
     this.handleModalClose = this.handleModalClose.bind(this);
-    this.handleSuccessfulNewBlogSubmission = this.handleSuccessfulNewBlogSubmission.bind(this);
+    this.handleSuccessfulNewBlogSubmission = this.handleSuccessfulNewBlogSubmission.bind(
+      this
+    );
   }
 
   handleSuccessfulNewBlogSubmission(blog) {
@@ -46,15 +48,16 @@ class Blog extends Component {
 
   onScroll() {
     if (
-      this.state.isLoading || this.state.blogItems.length === this.state.totalCount
+      this.state.isLoading ||
+      this.state.blogItems.length === this.state.totalCount
     ) {
       return;
     }
 
     if (
-      window.innerHeight + document.documentElement.scrollTop === 
+      window.innerHeight + document.documentElement.scrollTop ===
       document.documentElement.offsetHeight
-      ) {
+    ) {
       this.getBlogItems();
     }
   }
@@ -65,9 +68,12 @@ class Blog extends Component {
     });
 
     axios
-      .get(`https://jordanayoso.devcamp.space/portfolio/portfolio_blogs?page=${this.state.currentPage}`, {
-        withCredentials: true
-      })
+      .get(
+        `https://jordanayoso.devcamp.space/portfolio/portfolio_blogs?page=${this.state.currentPage}`,
+        {
+          withCredentials: true
+        }
+      )
       .then(response => {
         console.log("getting", response.data);
         this.setState({
@@ -96,25 +102,29 @@ class Blog extends Component {
 
     return (
       <div className="blog-container">
-        <BlogModal 
-        handleSuccessfulNewBlogSubmission={this.handleSuccessfulNewBlogSubmission} 
-        handleModalClose={this.handleModalClose} 
-        modalIsOpen={this.state.blogModalIsOpen} />
+        <BlogModal
+          handleSuccessfulNewBlogSubmission={
+            this.handleSuccessfulNewBlogSubmission
+          }
+          handleModalClose={this.handleModalClose}
+          modalIsOpen={this.state.blogModalIsOpen}
+        />
 
-        {this.props.loggedInStatus === "LOGGED_IN" ?
-        <div className="new-blog-link">
-          <a onClick={this.handleNewBlogClick}>
-            <FontAwesomeIcon icon="plus-square" />
-          </a>
-        </div>  : null }   
-
+        {this.props.loggedInStatus === "LOGGED_IN" ? (
+          <div className="new-blog-link">
+            <a onClick={this.handleNewBlogClick}>
+              <FontAwesomeIcon icon="plus-square" />
+            </a>
+          </div>
+        ) : null}
 
         <div className="content-container">{blogRecords}</div>
 
         {this.state.isLoading ? (
-        <div className="content-loader">
-          <FontAwesomeIcon icon="spinner" spin />
-        </div>) : null}
+          <div className="content-loader">
+            <FontAwesomeIcon icon="spinner" spin />
+          </div>
+        ) : null}
       </div>
     );
   }
