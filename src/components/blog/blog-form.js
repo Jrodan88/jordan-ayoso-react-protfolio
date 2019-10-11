@@ -9,6 +9,7 @@ export default class BlogForm extends Component {
     super(props);
 
     this.state = {
+      id: "",
       title: "",
       blog_status: "",
       content: "",
@@ -26,6 +27,16 @@ export default class BlogForm extends Component {
     this.handleFeaturedImageDrop = this.handleFeaturedImageDrop.bind(this);
 
     this.featuredImageRef = React.createRef();
+  }
+
+  componentWillMount() {
+    if (this.props.editMode) {
+      this.setState({
+        id: this.props.blog.id,
+        title: this.props.blog.title,
+        status: this.props.blog.status
+      });
+    }
   }
 
   componentConfig() {
@@ -62,7 +73,7 @@ export default class BlogForm extends Component {
 
     if (this.state.featured_image) {
       formData.append(
-        "portfolio_blog[featured_image",
+        "portfolio_blog[featured_image]",
         this.state.featured_image
       );
     }
@@ -73,7 +84,7 @@ export default class BlogForm extends Component {
   handleSubmit(event) {
     axios
       .post(
-        "https://jordanayoso.devcamp.space/portfolio/portfolio_blogs",
+        "https://jordan.devcamp.space/portfolio/portfolio_blogs",
         this.buildForm(),
         { withCredentials: true }
       )
