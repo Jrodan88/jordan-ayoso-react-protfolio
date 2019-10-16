@@ -1,15 +1,28 @@
-import { 
+import {
+  faTrash,
+  faSignOutAlt,
+  faEdit,
+  faEraser,
+  faSpinner,
+  faPlusSquare,
+  faPhone,
+  faEnvelope,
+  faMapMarkedAlt
+} from "@fortawesome/free-solid-svg-icons";
+import { library } from "@fortawesome/fontawesome-svg-core";
+
+const Icons = () => {
+  return library.add(
     faTrash,
-    faSignOutAlt, 
-    faEdit, 
+    faSignOutAlt,
+    faEdit,
     faEraser,
     faSpinner,
-    faPlusSquare
-  } from "@fortawesome/free-solid-svg-icons";
-  import { library } from "@fortawesome/fontawesome-svg-core";
+    faPlusSquare,
+    faPhone,
+    faEnvelope,
+    faMapMarkedAlt
+  );
+};
 
-  const Icons = () => {
-  return  library.add(faTrash, faSignOutAlt, faEdit, faEraser, faSpinner, faPlusSquare);
-  };
-
-  export default Icons;
+export default Icons;
